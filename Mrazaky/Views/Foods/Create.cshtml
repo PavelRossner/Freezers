@@ -1,0 +1,68 @@
+﻿@model Mrazaky.Models.Food
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Zadej informace o potravinách</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <input asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FoodName" class="control-label"></label>
+                <input asp-for="FoodName" class="form-control" />
+                <span asp-validation-for="FoodName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfPackages" class="control-label"></label>
+                <input asp-for="NumberOfPackages" class="form-control" />
+                <span asp-validation-for="NumberOfPackages" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DatePurchase" class="control-label"></label>
+                <input asp-for="DatePurchase" class="form-control" />
+                <span asp-validation-for="DatePurchase" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BestBefore" class="control-label"></label>
+                <input asp-for="BestBefore" class="form-control" />
+                <span asp-validation-for="BestBefore" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Freezer" class="control-label"></label>
+                <input asp-for="Freezer" class="form-control" />
+                <span asp-validation-for="Freezer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FreezerPosition" class="control-label"></label>
+                <input asp-for="FreezerPosition" class="form-control" />
+                <span asp-validation-for="FreezerPosition" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PackageLabel" class="control-label"></label>
+                <input asp-for="PackageLabel" class="form-control" />
+                <span asp-validation-for="PackageLabel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Vytvořit" class="pridat-tlacitko" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Index" class="pridat-tlacitko">Zpět</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

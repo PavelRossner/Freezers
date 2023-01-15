@@ -1,0 +1,67 @@
+﻿@model Mrazaky.Models.Food
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h3>Opravdu si přeješ záznam smazat?</h3>
+<div>
+    <h4>Food</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FoodName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FoodName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfPackages)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumberOfPackages)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DatePurchase)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DatePurchase)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BestBefore)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BestBefore)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Freezer)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Freezer)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FreezerPosition)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FreezerPosition)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PackageLabel)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PackageLabel)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="FoodId" />
+        <input type="submit" value="Smazat" class="pridat-tlacitko" /> |
+        <a asp-action="Index" class="pridat-tlacitko">Zpět na seznam</a>
+    </form>
+</div>

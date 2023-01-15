@@ -1,0 +1,49 @@
+﻿@model Mrazaky.Models.ApplicationUser
+
+
+@{
+    ViewData["Title"] = "Smazat uživatele z databáze";
+}
+
+<body>
+
+    <div id="sirkatextu">
+        <br />
+@*        <h3>Opravdu chcete uživatele smazat? <strong><span style="color:red;">Při této akci budou odstraněna veškerá databázová data.</span></strong></h3>
+        <br />
+        <h4>Pokud chcete data uchovat, zálohujte je.</h4>
+        <hr />*@
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Smazat" class="pridat-tlacitko" />
+            <a asp-action="Index" class="pridat-tlacitko">Zrušit</a>
+        </form>
+    </div>
+</body>

@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="text-center">
+    <h4 class="display-4">Aplikace pro evidenci potravin</h4>
+
+    @if (User.Identity.Name == null)
+    {
+        <h4>Před použitím aplikace je třeba se <a href="~/Account/Login">přihlásit</a>/<a href="~/Account/Register">registrovat</a>.</h4>
+    }
+</div>
+
+<body>
+    Aplikace slouží pro sledování zásob potravin dlouhodobě skladovaných v mrazáku. Z důvodu dlouhých experičních lhůt mnoha potravin a faktu, že v mrazáku řada spotřebitelů skladuje zboží i po uplynutí doporučené doby spotřeby, je velmi snadné
+    ztratit přehled o aktuálních zásobách, což vede k nežádoucímu hromadění potravin a případně i jejich likvidaci v případě výrazného překročení doby expirace. Aplikace umožňuje vytvořit databázi potravin, včetně zaznamenání doby trvanlivosti daného zboží.
+    Aplikace též znázorňuje počet dnů zbývajících do doby expirace dané potraviny, včetně barevného zvýraznění (<strong><span style="color:orange;">oranžová</span></strong> pro dobu 30 dnů před expirací, <strong><span style="color:red;">červená</span></strong>
+    pro expirované zboží), dále umožňuje evidenci mrazáku, v němž je potravina umístěna. V přehledu potravin je možné vyhledávat a třídit položky podle údajů v hlavičce tabulky (je nutno povolit JavaScript).
+    <br /><br />
+    Další funkcí aplikace je správa mrazáků - tj. seznam mrazáků, v nichž jsou potraviny uloženy, s uvedením doby, kdy byl mrazák naposledy odmražen, a termínem dalšího odmražení (je možno nastavit individuálně pro jednotlivé mrazáky). Aplikace uvádí počet
+    dnů zbývajících do plánovaného odmražení, které odlišuje barevně (<strong><span style="color:orange;">oranžově</span></strong> pro dobu kratší než 10 dnů, <strong><span style="color:red;">červeně</span></strong> pro dobu, která přesáhla plánovaný
+    termín odmražení). Ke každému evidovanému mrazáku je možné vložit poznámku.
+</body>
+
+
+

@@ -1,0 +1,58 @@
+﻿@model Mrazaky.Models.Freezer
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Přidej informaci o mrazáku</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Order" class="control-label"></label>
+                <input asp-for="Order" class="form-control" />
+                <span asp-validation-for="Order" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FreezerLocation" class="control-label"></label>
+                <input asp-for="FreezerLocation" class="form-control" />
+                <span asp-validation-for="FreezerLocation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfShelves" class="control-label"></label>
+                <input asp-for="NumberOfShelves" class="form-control" />
+                <span asp-validation-for="NumberOfShelves" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastDefrosted" class="control-label"></label>
+                <input asp-for="LastDefrosted" class="form-control" />
+                <span asp-validation-for="LastDefrosted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DefrostInterval" class="control-label"></label>
+                <input asp-for="DefrostInterval" class="form-control" />
+                <span asp-validation-for="DefrostInterval" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Note" class="control-label"></label>
+                <input asp-for="Note" class="form-control" />
+                <span asp-validation-for="Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Vytvořit" class="pridat-tlacitko" />
+            </div>
+        </form>
+    </div>
+</div>
+<br />
+<div>
+    <a asp-action="Index" class="pridat-tlacitko">Zpět</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

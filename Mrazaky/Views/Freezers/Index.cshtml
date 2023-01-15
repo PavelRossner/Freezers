@@ -1,0 +1,149 @@
+﻿@model IEnumerable<Mrazaky.Models.Response.FreezerResponse>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h4>Přehled mrazáků</h4>
+
+<p>
+    <a class="pridat-tlacitko" asp-action="Create">Přidat mrazák</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-tabulka-stred">
+                @Html.DisplayNameFor(model => model.Order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FreezerLocation)
+                @*     <div id="p">Mrazák</div>*@
+            </th>
+            <th class="text-tabulka-stred">
+                @Html.DisplayNameFor(model => model.NumberOfShelves)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastDefrosted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DefrostInterval)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NextDefrosted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DaysToDefrost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Note)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="text-tabulka-stred">
+                    @Html.DisplayFor(modelItem => item.Order)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FreezerLocation)
+                </td>
+                <td class="text-tabulka-stred">
+                    @Html.DisplayFor(modelItem => item.NumberOfShelves)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastDefrosted)
+                </td>
+                <td class="text-tabulka-stred">
+                    @Html.DisplayFor(modelItem => item.DefrostInterval)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NextDefrosted)
+                </td>
+                @if (item.DaysToDefrost < 0)
+                {
+                    <td class="bold text-tabulka-stred" style="color:red">@Html.DisplayFor(modelItem => item.DaysToDefrost)</td>
+                }
+
+                else if (item.DaysToDefrost < 10)
+                {
+                    <td class="bold text-tabulka-stred" style="color:orange">@Html.DisplayFor(modelItem => item.DaysToDefrost)</td>
+                }
+
+                else
+                {
+                    <td class="bold text-tabulka-stred" style="color:green">@Html.DisplayFor(modelItem => item.DaysToDefrost)</td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                <td>
+                    @if (User.Identity.Name == "pajaro@volny.cz" || User.Identity.Name == "andrearo@seznam.cz")
+                    {
+                        @if (item.Order == 1)
+                        {
+                            <a class="pridat-tlacitko" href="~/images/Sklep748_edit.jpg" target="_blank">Pohled na mrazák</a>
+                        }
+                        else if (item.Order == 2)
+                        {
+                            <a class="pridat-tlacitko" href="~/images/Kuchyne748_edit.jpg" target="_blank">Pohled na mrazák</a>
+                        }
+                        else if (item.Order == 3)
+                        {
+                            <a class="pridat-tlacitko" href="~/images/Kuchyne833_edit.jpg" target="_blank">Pohled na mrazák</a>
+                        }
+                    }
+                    |
+                    <a asp-action="Edit" class="pridat-tlacitko" asp-route-id="@item.FreezerId">Upravit</a> |
+                    <a asp-action="Delete" class="pridat-tlacitko" asp-route-id="@item.FreezerId">Smazat</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+@*               <select id="select">
+                <option selected>Sklep 748</option>
+                <option>Kuchyně 748</option>
+                <option>Kuchyně 833</option>
+                </select>*@
+
+
+@*@section Scripts {
+    <script type="text/javascript">
+
+        const selectElem = document.getElementById('select')
+        const pElem = document.getElementById('p')
+
+        // When a new <option> is selected
+        selectElem.addEventListener('change', () => {
+            const index = selectElem.selectedIndex;
+            // Add that data to the <p>
+            pElem.textContent = `Mrazák`;
+        })
+    </script>
+
+}
+*@
+@*            @section Scripts {
+    <script type="text/javascript">
+
+        const selectElem = document.getElementById('select')
+        const pElem = document.getElementById('p')
+
+        // When a new <option> is selected
+        selectElem.addEventListener('change', () => {
+            const index = selectElem.selectedIndex;
+            // Add that data to the <p>
+            pElem.textContent = `selectedIndex: ${index}`;
+        })
+    </script>*@
