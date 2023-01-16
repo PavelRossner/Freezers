@@ -271,25 +271,17 @@ namespace Mrazaky.Migrations
 
             modelBuilder.Entity("Mrazaky.Models.FoodFreezer", b =>
                 {
-                    b.Property<int>("FoodFreezerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FoodFreezerId"), 1L, 1);
-
                     b.Property<int>("FoodId")
                         .HasColumnType("int");
 
                     b.Property<int>("FreezerId")
                         .HasColumnType("int");
 
-                    b.HasKey("FoodFreezerId");
-
-                    b.HasIndex("FoodId");
+                    b.HasKey("FoodId", "FreezerId");
 
                     b.HasIndex("FreezerId");
 
-                    b.ToTable("FoodFreezer");
+                    b.ToTable("FoodFreezers");
                 });
 
             modelBuilder.Entity("Mrazaky.Models.Freezer", b =>
@@ -394,13 +386,13 @@ namespace Mrazaky.Migrations
                     b.HasOne("Mrazaky.Models.Food", "Food")
                         .WithMany("FoodFreezers")
                         .HasForeignKey("FoodId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Mrazaky.Models.Freezer", "Freezer")
                         .WithMany("FoodFreezers")
                         .HasForeignKey("FreezerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Food");

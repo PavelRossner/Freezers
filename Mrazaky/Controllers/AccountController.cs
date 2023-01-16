@@ -141,22 +141,21 @@ namespace Mrazaky.Controllers
 
 
         // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(string id, string Food, string Freezer)
+        public async Task<IActionResult> Delete(string id, string FoodName, string FreezerLocation)
         {
             if (id == null || db.Users == null)
             {
                 return NotFound();
             }
 
-            var food = db.Food.Find(Food);
-            var freezer = db.Freezer.Find(Freezer);
+            var food = db.Food.Include(fi => fi.FoodName);
+            var freezer = db.Freezer.Include(fr => fr.FreezerLocation);
             if (food != null || freezer != null)
-            {
-                return RedirectToAction("Error_database", "Account");
-            }
+
+            { return RedirectToAction("Error_database", "Account"); }
 
             var user = await db.Users
-                .FirstOrDefaultAsync(m => m.Id == id);
+            .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
                 return NotFound();

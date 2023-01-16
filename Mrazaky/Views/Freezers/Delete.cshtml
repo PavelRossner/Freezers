@@ -1,8 +1,16 @@
 ﻿@model Mrazaky.Models.Freezer
+@*@inject Mrazaky.Models.Food Food
+@inject Mrazaky.Models.Freezer Freezer*@
 
 @{
     ViewData["Title"] = "Delete";
 }
+
+@*@if (Freezer.FreezerLocation == Food.Freezer)
+{
+    <h4>Před smazáním účtu uživatele je třeba odstranit/zálohovat informace o potravinách a mrazácích.</h4>
+
+}*@
 
 <h3>Opravdu si přeješ záznam smazat?</h3>
 <div>

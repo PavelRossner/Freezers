@@ -31,6 +31,6 @@ namespace Mrazaky.Models
         public string Note { get; set; } = "";
 
         //Navigation property
-        public virtual ICollection<Food> Foods { get; set; } = new HashSet<Food>();
+        public virtual ICollection<FoodFreezer> FoodFreezers { get; set; }
     }
 }

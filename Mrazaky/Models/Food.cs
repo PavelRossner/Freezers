@@ -35,7 +35,7 @@ namespace Mrazaky.Models
         public string PackageLabel { get; set; } = "";
 
         //Navigation property
-        public virtual ICollection<Freezer> Freezers { get; set; } = new HashSet<Freezer>();
+        public virtual ICollection<FoodFreezer> FoodFreezers { get; set; }
 
     }
 }

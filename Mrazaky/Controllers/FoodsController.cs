@@ -30,7 +30,7 @@ namespace Mrazaky.Controllers
                 return RedirectToAction("Error", "Foods");
             }
 
-            var applicationDbContext = db.Food.Where(fo => fo.Id == user || User.Identity.Name.Contains("admin")).Include(fo => fo.User).Include(fr => fr.Freezers);
+            var applicationDbContext = db.Food.Where(fo => fo.Id == user || User.Identity.Name.Contains("admin")).Include(fo => fo.User)/*.Include(fr => fr.Freezers)*/;
             return View(db.Food.Select(FoodResponse.GetFoodResponse).ToList());
         }
 

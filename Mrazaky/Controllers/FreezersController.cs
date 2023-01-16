@@ -30,7 +30,7 @@ namespace Mrazaky.Controllers
                 return RedirectToAction("Error", "Freezers");
             }
 
-            var applicationDbContext = db.Freezer.Where(fr => fr.Id == user || User.Identity.Name.Contains("admin")).Include(fr => fr.User).Include(fo => fo.Foods);
+            var applicationDbContext = db.Freezer.Where(fr => fr.Id == user || User.Identity.Name.Contains("admin")).Include(fr => fr.User)/*.Include(fo => fo.Foods)*/;
             return View(db.Freezer.Select(FreezerResponse.GetFreezerResponse).ToList());
         }
 
@@ -121,10 +121,10 @@ namespace Mrazaky.Controllers
                 return NotFound();
             }
 
-            var freezerfreezerlocation = db.Freezer.Select(fl => fl.FreezerLocation);
-            var foodfreezer = db.Food.Select(fr => fr.Freezer);
+            var freezerFreezerLocation = db.Freezer.Select(fl => fl.FreezerLocation);
+            var foodFreezer = db.Food.Select(fr => fr.Freezer);
 
-            if (freezerfreezerlocation == foodfreezer)
+            if (freezerFreezerLocation == foodFreezer)
             {
                 return RedirectToAction("Error_database_freezer", "Freezers");
             }

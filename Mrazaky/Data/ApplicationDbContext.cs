@@ -18,6 +18,7 @@ namespace Mrazaky.Data
         public DbSet<Food> Food { get; set; }
         public DbSet<Freezer> Freezer { get; set; }
         public DbSet<ApplicationUser> User { get; set; }
+        public DbSet<FoodFreezer> FoodFreezers { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -36,16 +37,17 @@ namespace Mrazaky.Data
             .HasForeignKey(u => u.Id)
             .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Freezer>()
-            .HasMany(t => t.Foods)
-            .WithMany(t => t.Freezers);
+            //builder.Entity<Freezer>()
+            //.HasMany(t => t.Foods)
+            //.WithMany(t => t.Freezers)
+            //.UsingEntity(j => j.ToTable("FoodFreezer"));
 
             //builder
             //.Entity<FoodFreezer>()
             //.HasKey(ff => ff.FoodFreezerId);
 
-            //builder.Entity<FoodFreezer>()
-            //    .HasKey(e => new { e.FoodId, e.FreezerId });
+            builder.Entity<FoodFreezer>()
+                .HasKey(e => new { e.FoodId, e.FreezerId });
 
             //builder
             //    .Entity<FoodFreezer>()
