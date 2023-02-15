@@ -1,10 +1,7 @@
 
-/*Font a velikost ramecku titulni stranky, obrazek v pozadi*/
+/*Font at Body of pages (title page, tables)*/
 body {
-    background-image: url('../images/hodinky-edit-otoceny.jpg');
-    background-repeat: no-repeat;
-    background-size: 1000px;
-    background-position: center;
+
     font-family: Calibri !important;
     font-size: 14px !important;
     box-sizing: border-box;
@@ -12,13 +9,7 @@ body {
     text-align: justify;
 }
 
-/*Format obrazku na hlavni strance*/
-.obrazek {
-    width: 200px;
-    padding: 20px;
-}
-
-/*Format nadpisu v tele stranky*/
+/*Heading format at title page*/
 h1, h2, h3, h4, h5, h6 {
     text-align: left;
     color: #ffffff;
@@ -28,84 +19,50 @@ h1, h2, h3, h4, h5, h6 {
     width: fit-content;
 }
 
-/*Souhrnne tabulky - nadpisy*/
-#tabulkynadpis {
-    margin: 0 auto;
-}
 
-#centrovanitabulky {
-    margin: 0 auto;
-}
-
-
-/*Vyska tela stranky*/
-article header {
-    height: 100px;
-    background: none;
-}
-
-/*Sirka tela stranky*/
-#sirkatextu {
-    margin: 0 auto;
-    max-width: fit-content;
-}
-
-/*Sirka tela hlavni stranky*/
-#sirkatextuhlavnistrana {
+/*Register and Logout page width*/
+#textwidth {
     margin: 0 auto;
     max-width: 960px;
 }
 
-/*Plasticky ramecek u titulni stranky*/
-.domu-article {
-    grid-template-columns: auto auto;
-    grid-template-rows: 100px max-content;
-    border: 3px none green;
-    box-shadow: 2px 2px 7px #1c2228;
-    padding: 20px 20px;
-}
 
-/*Text se neprekryva s hlavickou*/
-article {
-    padding: 80px 50px;
-    flex: 1;
-}
-
-/*Stylovani navigacni listy - neovlivni barvu textu*/
+/*Navbar styling - does not affect text color*/
 body > header {
     background-image: linear-gradient(to right, #e8d397, #faf8f5);
     height: 70px;
     width: 100%;
 }
 
-/*Text v navigacni liste, ale neovlivni barvu*/
+/*Navbar text format - does not affect color*/
 nav ul {
     align-items: center;
     padding: 0px 0;
     text-decoration: none;
     text-transform: uppercase;
     font-family: Calibri;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: bold;
 }
 
-#barva {
+/*Navbar text color*/
+#navbartextcolor {
     color: darkcyan;
 }
 
-/*Podtrzeni pri najeti mysi v navigacni liste*/
-nav ul a:hover, .aktivni a {
+/*Underlines text in navbar with mouse hover*/
+nav ul a:hover {
     border-bottom: 2px solid #EF6534;
 }
 
-/*Pozice napisu v navigacni liste*/
+/*Navbar text position*/
 nav ul li {
     padding: 0 7px;
     font-size: 1em;
     line-height: 4.3em;
 }
 
-/*Styl textu v roletce*/
+/*Text style of dropdown menu*/
 .dropdown-item {
     color: #0c05c7;
     padding: 0 25px;
@@ -114,19 +71,8 @@ nav ul li {
     line-height: 2em;
 }
 
-.kontakt-tlacitko {
-    background: #EF6534;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-    .kontakt-tlacitko:hover {
-        color: white;
-        filter: brightness(115%) contrast(85%);
-        border: 0;
-    }
-
-.pridat-tlacitko {
+/*Button style*/
+.add-button {
     background: #eac7c7;
     padding: 5px 10px;
     border-radius: 5px;
@@ -136,57 +82,61 @@ nav ul li {
     color: black;
 }
 
-    .pridat-tlacitko:hover {
+/*Button style with mouse hover*/
+    .add-button:hover {
         color: white;
         filter: brightness(115%) contrast(85%);
         border: 0;
     }
 
 
-.pozice-tlacitko {
-    margin: 25px;
-}
-
-.mezera {
-    margin-bottom: 20px
-}
-
-/*Stylovani tabulek*/
+/*Styling of tables*/
 .table {
-    width: max-content;
+    width: fit-content;
     text-align: center;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-collapse: collapse;
 }
 
-
+/*Footer styling*/
 footer {
     box-sizing: border-box;
     text-align: center;
     height: 100px;
 }
 
-    footer a {
-        color: white;
-        text-decoration: none;
-    }
 
-
-/*Zarovnání textu v tabulkach*/
+/*Text alignment in tables*/
 td, th {
-    text-align: left;
+    text-align: left;    
+    white-space: normal;
 }
 
-.text-tabulka-stred {
 
+/*Table header background*/
+thead {
+    background-color: #F0F0F0;
+}
+
+/*Buttons in tables next to each other*/
+.nowrap {
+    white-space: nowrap;
+}
+
+/*Text in tables centered*/
+.text-table-center {
     text-align: center;
 }
 
 
-/*Tucne hodnoty energeticke bilance*/
+/*Bold values in tables*/
 .bold {
     font-weight: bold;
 }
 
-/*Pozadi responzivni roletky - nastaveni velikosti obrazovky*/
+
+/*Background of responsive dropdowns  - screen size setting*/
 @media screen and (max-width:1000px) {
     .navbar-collapse {
         background-color: #f0e5c5;
@@ -194,13 +144,13 @@ td, th {
     }
 }
 
-/*Barva respozivniho tlacitka*/
+/*Responsive button color*/
 .responzivnitlacitko {
     border-color: darkcyan !important;
     background-color: darkcyan !important;
 }
 
-/*Styl roletky*/
+/*Dropdown menu styling*/
 .dropdown-menu {
     display: none;
     background-color: #f9f9f9;
@@ -211,4 +161,17 @@ td, th {
     padding: 0px 16px;
     position: absolute;
     top: 0px;
+}
+
+/*Sets div width for JS Datatables tables*/
+.width {
+    width: 500px;
+    margin: auto;
+    position: absolute;
+    left: 200px;
+}
+
+/*Sets left alignment for JS date-time at home page*/
+.JSleft {
+    text-align: left;
 }

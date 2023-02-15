@@ -3,34 +3,39 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mrazaky.Models
 {
-    public class Freezer
+    public partial class Freezer
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key()]
         public int FreezerId { get; set; }
 
-        [ForeignKey("ApplicationUser")]
-        public string Id { get; set; }
-        public virtual ApplicationUser User { get; set; }
+        [Display(Name = "Název mrazáku")] // TODO
+        public string FreezerName { get; set; } = "";
 
-        [Display(Name = "Pořadové číslo")]
-        public int Order { get; set; }
-
-        [Display(Name = "Mrazák")]
-        public string FreezerLocation { get; set; } = "";
-
-        [Display(Name = "Počet přihrádek")]
+        [Display(Name = "Počet přihrádek")]// TODO
         public int NumberOfShelves { get; set; }
 
         [Display(Name = "Poslední odmražení")]
+        [Column(TypeName = "date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]// TODO
         public DateTime LastDefrosted { get; set; }
 
-        [Display(Name = "Interval odmražení (dny)")]
-        public int DefrostInterval { get; set; }        
+        [Display(Name = "Interval odmražení (dny)")]// TODO
+        public int DefrostInterval { get; set; }
 
-        [Display(Name = "Poznámka")]
+        [Display(Name = "Poznámka")]// TODO
         public string Note { get; set; } = "";
 
-        //Navigation property
-        public virtual ICollection<FoodFreezer> FoodFreezers { get; set; }
+        /// <summary>
+        /// Gets or sets the user freezer.
+        /// </summary>
+        public virtual ICollection<ApplicationUserFreezer> UserFreezer { get; set; } = new HashSet<ApplicationUserFreezer>();
+
+        /// <summary>
+        /// Gets or sets the freezer food.
+        /// </summary>
+        public virtual ICollection<FreezerFood> FreezerFood { get; set; } = new HashSet<FreezerFood>();
+
+        //TODO - delete Navigation property => not deleted - needed in FoodsController
+        public virtual ICollection<Food> Foods { get; set; } = new HashSet<Food>();
     }
 }

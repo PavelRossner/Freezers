@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Mrazaky.Models.FoodCategory>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+<br />
+
+<h4>Kategorie potravin</h4>
+
+<p>
+    <a class="add-button" asp-action="Create">Přidat kategorii</a>
+</p>
+<div class="width">
+<table id="razeni" class="table" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FoodCategoryName)
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FoodCategoryName)
+            </td>
+            <td>
+                    <a asp-action="Edit" class="add-button" asp-route-id="@item.FoodCategoryId">Upravit</a> |
+                    <a asp-action="Delete" class="add-button" asp-route-id="@item.FoodCategoryId">Smazat</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#razeni').DataTable(
+                {
+                    "columns": [
+                        { "width": "60%" },
+                        { "width": "40%" },
+                    ]
+                }
+            );
+        });
+
+    </script>
+}

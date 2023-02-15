@@ -8,7 +8,11 @@
 @{
     ViewData["Title"] = "Přihlášení";
 }
-<h3>Přihlášení</h3>
+
+<br />
+<br />
+
+<h4>Přihlášení</h4>
 <section>
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
@@ -33,11 +37,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="pridat-tlacitko align-self-start">Přihlásit se</button>
+                    <button type="submit" class="add-button align-self-start">Přihlásit se</button>
                 </div>
                 <div class="form-group">
                     <p>
-                        <a asp-action="Register" class="pridat-tlacitko" asp-route-returnurl="@ViewData["ReturnUrl"]">Registrace</a>
+                        <a asp-action="Register" class="add-button" asp-route-returnurl="@ViewData["ReturnUrl"]">Registrace</a>
                     </p>
                 </div>
             </form>

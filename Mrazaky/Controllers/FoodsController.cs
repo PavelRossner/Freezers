@@ -30,13 +30,22 @@ namespace Mrazaky.Controllers
                 return RedirectToAction("Error", "Foods");
             }
 
-            var applicationDbContext = db.Food.Where(fo => fo.Id == user || User.Identity.Name.Contains("admin")).Include(fo => fo.User)/*.Include(fr => fr.Freezers)*/;
             return View(db.Food.Select(FoodResponse.GetFoodResponse).ToList());
         }
 
         // GET: Foods/Create
         public IActionResult Create()
         {
+            bool freezer = db.Freezer.Any(fr => fr.FreezerName != null);
+
+            if (freezer == false)
+            {
+                return RedirectToAction("Error_Food");
+            }
+
+            else
+                ViewData["Category"] = new SelectList(db.FoodCategory, "FoodCategoryName", "FoodCategoryName");     //Creates dropdown menu in View (also see Create/POST)
+                ViewData["FreezerName"] = new SelectList(db.Freezer, "FreezerName", "FreezerName");                 //Creates dropdown menu in View (also see Create/POST)
             return View();
         }
 
@@ -45,18 +54,45 @@ namespace Mrazaky.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FoodId,Id,Category,FoodName,NumberOfPackages,DatePurchase,BestBefore,DaysToConsume,Freezer,FreezerPosition,PackageLabel")] Food food, ApplicationUser user)
+        public IActionResult Create([Bind("Category,FoodName,FreezerName,NumberOfPackages,Weight,PackageLabel,FreezerPosition,DatePurchase,BestBefore,Note")] Food food, Freezer freezer, FreezerFood freezerFood, FoodCategory foodCategory)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return View(food);
+            }
+
+
             if (ModelState.IsValid)
             {
-                user = db.User.FirstOrDefault(u => u.Id == this.User.Identity.GetUserId());
+                var user = db.User.FirstOrDefault(u => u.Id == this.User.Identity.GetUserId());
+                user.Foods.Add(food);                                                                       //creates FoodId in database table Food, foreign key ApplicationUserId
+                db.SaveChanges();
 
-                user.Foods.Add(food);
-                await db.SaveChangesAsync();
+                freezer = db.Freezer.Where(fr => fr.FreezerName == food.FreezerName).FirstOrDefault();      //creates foreign key FreezerId in database table Food
+
+                if (freezer == null)
+                {
+                    return RedirectToAction("Error_Food");
+                }
+
+                else
+
+                    freezer.Foods.Add(food);
+
+                freezer.FreezerFood.Add(freezerFood);                                                       //creates FreezerID in database table FreezerFood, primary key FreezerFoodID
+                food.FreezerFood.Add(freezerFood);                                                          //creates FoodID in database table FreezerFood, primary key FreezerFoodID
+
+                db.SaveChanges();
+
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["Category"] = new SelectList(db.FoodCategory, "FoodCategoryName", "FoodCategoryName", foodCategory.FoodCategoryName);  //Creates dropdown menu in View (also see Create/GET)
+            ViewData["FreezerName"] = new SelectList(db.Freezer, "FreezerName", "FreezerName", freezerFood.FreezerName);                    //Creates dropdown menu in View (also see Create/GET)
             return View(food);
         }
+
 
         // GET: Foods/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -72,6 +108,8 @@ namespace Mrazaky.Controllers
             {
                 return NotFound();
             }
+            ViewData["Category"] = new SelectList(db.FoodCategory, "FoodCategoryName", "FoodCategoryName");     //Creates dropdown menu in View (also see Create/POST)
+            ViewData["FreezerName"] = new SelectList(db.Freezer, "FreezerName", "FreezerName");                 //Creates dropdown menu in View (also see Create/POST)
             return View(food);
         }
 
@@ -80,7 +118,7 @@ namespace Mrazaky.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Food food)
+        public IActionResult Edit(int id, Food food, FreezerFood freezerFood, FoodCategory foodCategory)
         {
             if (id != food.FoodId)
             {
@@ -101,14 +139,18 @@ namespace Mrazaky.Controllers
 
             dbFood.Category = food.Category;
             dbFood.FoodName = food.FoodName;
+            dbFood.FreezerName = food.FreezerName;
             dbFood.NumberOfPackages = food.NumberOfPackages;
+            dbFood.Weight = food.Weight;
+            dbFood.PackageLabel = food.PackageLabel;
+            dbFood.FreezerPosition = food.FreezerPosition;
             dbFood.DatePurchase = food.DatePurchase;
             dbFood.BestBefore = food.BestBefore;
-            dbFood.Freezer = food.Freezer;
-            dbFood.FreezerPosition = food.FreezerPosition;
-            dbFood.PackageLabel = food.PackageLabel;
+            dbFood.Note = food.Note;
 
             db.SaveChanges();
+            ViewData["Category"] = new SelectList(db.FoodCategory, "FoodCategoryName", "FoodCategoryName", foodCategory.FoodCategoryName);  //Creates dropdown menu in View (also see Create/GET)
+            ViewData["FreezerName"] = new SelectList(db.Freezer, "FreezerName", "FreezerName", freezerFood.FreezerName);                    //Creates dropdown menu in View (also see Create/GET)
             return RedirectToAction(nameof(Index));
         }
 
@@ -121,7 +163,7 @@ namespace Mrazaky.Controllers
                 return NotFound();
             }
 
-            FoodResponse food = db.Food.Include(fo => fo.User)
+            FoodResponse food = db.Food.Include(fr => fr.FreezerFood)
                                 .Select(FoodResponse.GetFoodResponse)
                                 .FirstOrDefault(f => f.FoodId == id);
 
@@ -162,5 +204,9 @@ namespace Mrazaky.Controllers
             return View();
         }
 
+        public IActionResult Error_Food()
+        {
+            return View();
+        }
     }
 }

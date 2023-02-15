@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Mrazaky.Models.FreezerFood>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+<br />
+
+<h4>Přehled mrazáků a potravin, které jsou v nich uložené</h4>
+
+<div class="width">
+    <table id="razeni" class="table" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Food.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Food.FoodName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Freezer.FreezerName)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Food.Category)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Food.FoodName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Freezer.FreezerName)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#razeni').DataTable(
+                {
+                    "columns": [
+                        { "width": "20%" },
+                        { "width": "30%" },
+                        { "width": "30%" },
+                    ]
+                }
+            );
+        });
+
+    </script>
+}

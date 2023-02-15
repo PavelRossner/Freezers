@@ -3,39 +3,49 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mrazaky.Models
 {
-    public class Food
+    public partial class Food
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key()]
         public int FoodId { get; set; }
-        public string Id { get; set; }
-        public virtual ApplicationUser User { get; set; }
 
         [Display(Name = "Kategorie")]
-        public string Category { get; set; } = "";
+        public string Category { get; set; }
 
         [Display(Name = "Název potraviny")]
-        public string FoodName { get; set; } = "";
+        public string FoodName { get; set; }
+
+        [Display(Name = "Název mrazáku")]
+        public string FreezerName { get; set; }
 
         [Display(Name = "Počet balení")]
-        public int NumberOfPackages { get; set; }
+        public string NumberOfPackages { get; set; }
 
-        [Display(Name = "Datum zakoupení")]
+        [Display(Name = "Hmotnost (kg)")]
+        public string Weight { get; set; }
+
+        [Display(Name = "Datum zakoupení/uložení")]
+        [Column(TypeName = "date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
         public DateTime DatePurchase { get; set; }
 
-        [Display(Name = "Datum spotřeby")]
+        [Display(Name = "Spotřeba na obalu")]
+        [Column(TypeName = "date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
         public DateTime BestBefore { get; set; }
 
-        [Display(Name = "Mrazák")]
-        public string Freezer { get; set; } = "";
+        [Display(Name = "Označení balíčku")]
+        public string PackageLabel { get; set; }
 
         [Display(Name = "Pozice v mrazáku")]
-        public string FreezerPosition { get; set; } = "";
+        public string FreezerPosition { get; set; }
 
-        [Display(Name = "Označení balíčku")]
-        public string PackageLabel { get; set; } = "";
+        [Display(Name = "Poznámka")]
+        public string Note { get; set; } = "";
 
-        //Navigation property
-        public virtual ICollection<FoodFreezer> FoodFreezers { get; set; }
-
+        /// <summary>
+        /// Gets or sets the freezer food.
+        /// </summary>
+        public virtual ICollection<FreezerFood> FreezerFood { get; set; } = new HashSet<FreezerFood>();
     }
 }

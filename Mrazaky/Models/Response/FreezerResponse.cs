@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Linq;
 
 namespace Mrazaky.Models.Response
@@ -8,6 +10,9 @@ namespace Mrazaky.Models.Response
         public DateTime nextDefrosted;
 
         [Display(Name = "Příští odmražení")]
+        [Column(TypeName = "date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}")]
         public DateTime NextDefrosted
         {
             get { return (LastDefrosted.AddDays(DefrostInterval)); }
@@ -20,7 +25,6 @@ namespace Mrazaky.Models.Response
         public int DaysToDefrost
         {
             get { return (int)(NextDefrosted - DateTime.Today).TotalDays; }
-
             set { daysToDefrost = value; }
         }
 
@@ -29,8 +33,7 @@ namespace Mrazaky.Models.Response
             return new FreezerResponse
             {
                 FreezerId = freezer.FreezerId,
-                Order= freezer.Order,
-                FreezerLocation= freezer.FreezerLocation,
+                FreezerName= freezer.FreezerName,
                 NumberOfShelves= freezer.NumberOfShelves,
                 LastDefrosted= freezer.LastDefrosted,
                 DefrostInterval= freezer.DefrostInterval,

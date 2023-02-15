@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Mrazaky.Data;
 using Mrazaky.Models;
 using Mrazaky.Models.Response;
+using System.Linq;
 
 namespace Mrazaky.Controllers
 {
@@ -30,7 +31,6 @@ namespace Mrazaky.Controllers
                 return RedirectToAction("Error", "Freezers");
             }
 
-            var applicationDbContext = db.Freezer.Where(fr => fr.Id == user || User.Identity.Name.Contains("admin")).Include(fr => fr.User)/*.Include(fo => fo.Foods)*/;
             return View(db.Freezer.Select(FreezerResponse.GetFreezerResponse).ToList());
         }
 
@@ -46,17 +46,26 @@ namespace Mrazaky.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FreezerId,Id,Order,FreezerLocation,NumberOfShelves,LastDefrosted,DefrostInterval,NextDefrosted,DaysToDefrost,Note")] Freezer freezer, ApplicationUser user)
+        public IActionResult Create([Bind("FreezerId,FreezerName,NumberOfShelves,LastDefrosted,DefrostInterval,Note")] Freezer freezer, ApplicationUserFreezer applicationUserFreezer, ApplicationUser applicationUser, FreezerFood freezerFood, Food food, int? id)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(freezer);
+            }
+
+
             if (ModelState.IsValid)
             {
-                user = db.User.FirstOrDefault(u => u.Id == this.User.Identity.GetUserId());
+                var user = db.User.FirstOrDefault(u => u.Id == this.User.Identity.GetUserId());
+                user.Freezers.Add(freezer);                         //vytvoří FreezerId v tabulce Freezer, cizí klíč ApplicationUserId
+                db.SaveChanges();
 
-                user.Freezers.Add(freezer);
-                await db.SaveChangesAsync();
+                freezer.UserFreezer.Add(applicationUserFreezer);    //vytvoří FreezerId v tabulce ApplicationUserFreezer, primární klíč ApplicationUserFreezerId
+                user.UserFreezer.Add(applicationUserFreezer);       //vytvoří ApplicationUserId v tabulce ApplicationUserFreezer, primární klíč ApplicationUserFreezerId                
+                db.SaveChanges();
+
                 return RedirectToAction(nameof(Index));
             }
-            //ViewData["Id"] = new SelectList(db.User, "Id", "Id", freezer.Id);
             return View(freezer);
         }
 
@@ -73,7 +82,7 @@ namespace Mrazaky.Controllers
             {
                 return NotFound();
             }
-            //ViewData["Id"] = new SelectList(db.User, "Id", "Id", freezer.Id);
+
             return View(freezer);
         }
 
@@ -95,14 +104,13 @@ namespace Mrazaky.Controllers
             }
 
             Freezer dbFreezer = db.Freezer.FirstOrDefault(fr => fr.FreezerId == id);
-            
+
             if (dbFreezer == null)
             {
                 return View(freezer);
             }
 
-            dbFreezer.Order = freezer.Order;
-            dbFreezer.FreezerLocation = freezer.FreezerLocation;
+            dbFreezer.FreezerName = freezer.FreezerName;
             dbFreezer.NumberOfShelves = freezer.NumberOfShelves;
             dbFreezer.LastDefrosted = freezer.LastDefrosted;
             dbFreezer.DefrostInterval = freezer.DefrostInterval;
@@ -114,25 +122,24 @@ namespace Mrazaky.Controllers
         }
 
         // GET: Freezers/Delete/5
-        public IActionResult Delete(int? id, string FreezerLocation, string Freezer)
+        public IActionResult Delete(int? id, Food food)
         {
             if (id == null || db.Freezer == null)
             {
                 return NotFound();
             }
 
-            var freezerFreezerLocation = db.Freezer.Select(fl => fl.FreezerLocation);
-            var foodFreezer = db.Food.Select(fr => fr.Freezer);
-
-            if (freezerFreezerLocation == foodFreezer)
-            {
-                return RedirectToAction("Error_database_freezer", "Freezers");
-            }
-
-            FreezerResponse freezer = db.Freezer.Include(fr => fr.User)
+            FreezerResponse freezer = db.Freezer.Include(fr => fr.UserFreezer)
                                       .Select(FreezerResponse.GetFreezerResponse)
                                       .FirstOrDefault(f => f.FreezerId == id);
-            
+
+            food = db.Food.Where(fo => fo.FreezerName == freezer.FreezerName).FirstOrDefault();
+
+            if (food != null)
+            {
+                return RedirectToAction("Error_database_freezer");
+            }
+
             if (freezer == null)
             {
                 return NotFound();
@@ -150,22 +157,29 @@ namespace Mrazaky.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Freezer'  is null.");
             }
-            var freezer = await db.Freezer.FindAsync(id);
+            Freezer freezer = await db.Freezer.FindAsync(id);
+            
             if (freezer != null)
+
             {
                 db.Freezer.Remove(freezer);
             }
-            
+
             await db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool FreezerExists(int id)
         {
-          return db.Freezer.Any(e => e.FreezerId == id);
+            return db.Freezer.Any(e => e.FreezerId == id);
         }
 
         public IActionResult Error()
+        {
+            return View();
+        }
+
+        public IActionResult Error_Freezer()
         {
             return View();
         }

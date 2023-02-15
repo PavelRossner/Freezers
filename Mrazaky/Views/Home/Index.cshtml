@@ -10,16 +10,32 @@
     {
         <h4>Před použitím aplikace je třeba se <a href="~/Account/Login">přihlásit</a>/<a href="~/Account/Register">registrovat</a>.</h4>
     }
+
+    <div class="JSleft">
+        <script type="text/javascript">
+            document.write("<br />");
+            let d = new Date(); // vytvoří proměnnou, ve které je aktuální datum
+            var dnesnidatum = "Dnes je: " + d.getDate() + ". " + (d.getMonth() + 1) + ". " + d.getFullYear();
+            document.write('<span style="color:#00386B; font-size: 20px; text-shadow: 3px 3px 7px #666666; text-align: left;">' + dnesnidatum + '</span>');
+            document.write("<br />");
+        </script>
+    </div>
+    <br />
 </div>
 
 <body>
     Aplikace slouží pro sledování zásob potravin dlouhodobě skladovaných v mrazáku. Z důvodu dlouhých experičních lhůt mnoha potravin a faktu, že v mrazáku řada spotřebitelů skladuje zboží i po uplynutí doporučené doby spotřeby, je velmi snadné
-    ztratit přehled o aktuálních zásobách, což vede k nežádoucímu hromadění potravin a případně i jejich likvidaci v případě výrazného překročení doby expirace. Aplikace umožňuje vytvořit databázi potravin, včetně zaznamenání doby trvanlivosti daného zboží.
-    Aplikace též znázorňuje počet dnů zbývajících do doby expirace dané potraviny, včetně barevného zvýraznění (<strong><span style="color:orange;">oranžová</span></strong> pro dobu 30 dnů před expirací, <strong><span style="color:red;">červená</span></strong>
-    pro expirované zboží), dále umožňuje evidenci mrazáku, v němž je potravina umístěna. V přehledu potravin je možné vyhledávat a třídit položky podle údajů v hlavičce tabulky (je nutno povolit JavaScript).
-    <br /><br />
+    ztratit přehled o aktuálních zásobách, což vede k nežádoucímu hromadění potravin a případně i k jejich likvidaci v případě výrazného překročení doby expirace. Aplikace umožňuje vytvořit databázi potravin, včetně zaznamenání doby trvanlivosti zboží určené výrobcem.
+    Aplikace též znázorňuje měsíc a rok, kdy končí potravinám trvanlivost, a počet měsíců zbývajících do doby expirace, včetně barevného zvýraznění (
+    <strong><span style="color:orange;">oranžová</span></strong> pro dobu kratší než 30 dnů (1 měsíc) před expirací,
+    <strong><span style="color:red;">červená</span></strong> pro expirované zboží). V aplikaci je stanovena doba expirace v trvání 15 měsíců od uložení potraviny do mrazáku. V přehledu potravin je možné vyhledávat a třídit položky podle údajů v hlavičce tabulky
+    (je nutno povolit JavaScript). Potraviny jsou řazeny do kategorií, které je možno libovolně měnit (přidávat i mazat).
+    <br />
+    <br />
     Další funkcí aplikace je správa mrazáků - tj. seznam mrazáků, v nichž jsou potraviny uloženy, s uvedením doby, kdy byl mrazák naposledy odmražen, a termínem dalšího odmražení (je možno nastavit individuálně pro jednotlivé mrazáky). Aplikace uvádí počet
-    dnů zbývajících do plánovaného odmražení, které odlišuje barevně (<strong><span style="color:orange;">oranžově</span></strong> pro dobu kratší než 10 dnů, <strong><span style="color:red;">červeně</span></strong> pro dobu, která přesáhla plánovaný
+    dnů zbývajících do plánovaného odmražení, které odlišuje barevně (
+    <strong><span style="color:orange;">oranžově</span></strong> pro dobu kratší než 10 dnů,
+    <strong><span style="color:red;">červeně</span></strong> pro dobu, která přesáhla plánovaný
     termín odmražení). Ke každému evidovanému mrazáku je možné vložit poznámku.
 </body>
 

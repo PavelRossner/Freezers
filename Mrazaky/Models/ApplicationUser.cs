@@ -5,21 +5,22 @@ using System.Xml.Linq;
 
 namespace Mrazaky.Models
 {
-    public class ApplicationUser : IdentityUser
+    public partial class ApplicationUser : IdentityUser
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key()]
-        //[Display(Name = "Id")]
-
-        [Display(Name = "Email")]
-        public override string Email { get; set; } = "";
-
-        [Display(Name = "Jméno")]
         public string FirstName { get; set; } = "";
 
-        [Display(Name = "Příjmení")]
         public string LastName { get; set; } = "";
 
+        /// <summary>
+        /// Gets or sets the user's freezer.
+        /// </summary>
+        public virtual ICollection<ApplicationUserFreezer> UserFreezer { get; set; } = new HashSet<ApplicationUserFreezer>();
+
+        // TODO - delete => not deleted - it was needed for the application to work properly
         public virtual ICollection<Food> Foods { get; set; } = new HashSet<Food>();
+
+        // TODO - delete => not deleted - it was needed for the application to work properly
         public virtual ICollection<Freezer> Freezers { get; set; } = new HashSet<Freezer>();
+
     }
 }

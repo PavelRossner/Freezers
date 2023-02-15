@@ -1,33 +1,20 @@
 ﻿@model Mrazaky.Models.Freezer
-@*@inject Mrazaky.Models.Food Food
-@inject Mrazaky.Models.Freezer Freezer*@
 
 @{
     ViewData["Title"] = "Delete";
 }
 
-@*@if (Freezer.FreezerLocation == Food.Freezer)
-{
-    <h4>Před smazáním účtu uživatele je třeba odstranit/zálohovat informace o potravinách a mrazácích.</h4>
-
-}*@
-
-<h3>Opravdu si přeješ záznam smazat?</h3>
 <div>
-    <h4>Freezer</h4>
+<h4>Opravdu chcete mrazák smazat? <strong><span style="color:red;">Při této akci budou odstraněna veškera související s daným mrazákem.</span></strong></h4>
+    <br />
+    <h3>Pokud chcete informace o potravinách v mrazáku uchovat, zálohujte je, nebo uložte do jiného mrazáku.</h3>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Order)
+            @Html.DisplayNameFor(model => model.FreezerName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Order)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FreezerLocation)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FreezerLocation)
+            @Html.DisplayFor(model => model.FreezerName)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.NumberOfShelves)
@@ -57,7 +44,7 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="FreezerId" />
-        <input type="submit" value="Smazat" class="pridat-tlacitko" /> |
-        <a asp-action="Index" class="pridat-tlacitko">Zpět na seznam</a>
+        <input type="submit" value="Smazat" class="add-button" /> |
+        <a asp-action="Index" class="add-button">Zpět na seznam</a>
     </form>
 </div>

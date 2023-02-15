@@ -13,10 +13,10 @@ namespace Mrazaky.Controllers
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ApplicationDbContext db;
 
-        public AccountController                                                     //Konstruktor
+        public AccountController                                                     //Constructor
         (
-            Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager,  //Instance tříd UserManager a SignInManager jsou parametry konstruktoru; získají se mechanismem Dependency Injection - do kontroleru se pošlou samy
-            SignInManager<ApplicationUser> signInManager,                            //To se zajistí registrací služeb v Program.cs , vlastností builder.Services
+            Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> userManager,  //Instances of classes UserManager and SignInManager are constructor parameters; they are obtaines using Dependency Injection - they are sent automatically to controller
+            SignInManager<ApplicationUser> signInManager,                            //This is achieved by services registration in Program.cs, builder.Services property
             ApplicationDbContext db
         )
         {
@@ -119,8 +119,6 @@ namespace Mrazaky.Controllers
 
         public IActionResult Index()
         {
-            //return View(db.Users.ToList());
-
             var user = User.Identity.GetUserId();
 
             if (user == null)
@@ -141,21 +139,20 @@ namespace Mrazaky.Controllers
 
 
         // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(string id, string FoodName, string FreezerLocation)
+        public async Task<IActionResult> Delete(string id, Food food, Freezer freezer)
         {
             if (id == null || db.Users == null)
             {
                 return NotFound();
             }
 
-            var food = db.Food.Include(fi => fi.FoodName);
-            var freezer = db.Freezer.Include(fr => fr.FreezerLocation);
-            if (food != null || freezer != null)
-
-            { return RedirectToAction("Error_database", "Account"); }
+            //if (food != null || freezer != null)
+            //{
+            //    return RedirectToAction("Error_database", "Account");
+            //}
 
             var user = await db.Users
-            .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
                 return NotFound();
@@ -185,20 +182,19 @@ namespace Mrazaky.Controllers
         }
 
         public IActionResult Error_admin()
-
         {
             return View();
         }
 
         public IActionResult Error_user()
-
         {
             return View();
         }
 
         public IActionResult Error_database()
-
-        { return View(); }
+        { 
+            return View(); 
+        }
     }
 
 }

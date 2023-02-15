@@ -1,0 +1,26 @@
+﻿@model Mrazaky.Models.FoodCategory
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div>
+    <h4>Opravdu chcete záznam smazat?</h4>
+    <br />
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FoodCategoryName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FoodCategoryName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="FoodCategoryId" />
+        <input type="submit" value="Smazat" class="add-button" /> |
+        <a asp-action="Index" class="add-button">Zpět na seznam</a>
+    </form>
+</div>
+

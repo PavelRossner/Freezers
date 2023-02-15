@@ -7,8 +7,10 @@
 <br />
 <br />
 
+<h4>Potraviny v mrazácích</h4>
+
 <p>
-    <a class="pridat-tlacitko" asp-action="Create">Přidat potravinu</a>
+    <a class="add-button" asp-action="Create">Přidat potravinu</a>
 </p>
 <table id="razeni" class="table">
     <thead>
@@ -20,7 +22,19 @@
                 @Html.DisplayNameFor(model => model.FoodName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.FreezerName)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.NumberOfPackages)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Weight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PackageLabel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FreezerPosition)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DatePurchase)
@@ -29,18 +43,16 @@
                 @Html.DisplayNameFor(model => model.BestBefore)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DaysToConsume)
+                @Html.DisplayNameFor(model => model.Consumption)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Freezer)
+                @Html.DisplayNameFor(model => model.MonthsToConsume)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FreezerPosition)
+                @Html.DisplayNameFor(model => model.Note)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PackageLabel)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -53,42 +65,59 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.FoodName)
                 </td>
-                <td class="text-tabulka-stred">
+                <td>
+                    @Html.DisplayFor(modelItem => item.FreezerName)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.NumberOfPackages)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Weight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PackageLabel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FreezerPosition)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DatePurchase)
                 </td>
-                @if (item.BestBefore <= DateTime.Today)
+                <td>
+                    @Html.DisplayFor(modelItem => item.BestBefore)
+                </td>
+                @if (item.Consumption <= DateTime.Today)
                 {
-                    <td class="bold" style="color:red">@Html.DisplayFor(modelItem => item.BestBefore)</td>
+                    <td class="bold" style="color:red">@Html.DisplayFor(modelItem => item.Consumption)</td>
                 }
-
-                else if ((item.BestBefore - DateTime.Today).TotalDays < 30)
+                else if ((item.Consumption - DateTime.Today).TotalDays < 30)
                 {
-                    <td class="bold" style="color:orange">@Html.DisplayFor(modelItem => item.BestBefore)</td>
+                    <td class="bold" style="color:orange">@Html.DisplayFor(modelItem => item.Consumption)</td>
                 }
-
                 else
                 {
-                    <td class="bold" style="color:green">@Html.DisplayFor(modelItem => item.BestBefore)</td>
+                    <td class="bold" style="color:green">@Html.DisplayFor(modelItem => item.Consumption)</td>
                 }
-                <td class="text-tabulka-stred">
-                    @Html.DisplayFor(modelItem => item.DaysToConsume)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Freezer)
-                </td>
-                <td class="text-tabulka-stred">
-                    @Html.DisplayFor(modelItem => item.FreezerPosition)
-                </td>
-                <td class="text-tabulka-stred">
-                    @Html.DisplayFor(modelItem => item.PackageLabel)
-                </td>
+
+                @if (item.MonthsToConsume < 0)
+                {
+                    <td class="bold" style="color:red">@Html.DisplayFor(modelItem => item.MonthsToConsume)</td>                    
+                }
+                else if (item.MonthsToConsume < 1)
+                {
+                    <td class="bold" style="color:orange">@Html.DisplayFor(modelItem => item.MonthsToConsume)</td>
+                }
+                else
+                {
+                    <td class="bold" style="color:green">@Html.DisplayFor(modelItem => item.MonthsToConsume)</td>
+                }
 
                 <td>
-                    <a asp-action="Edit" class="pridat-tlacitko" asp-route-id="@item.FoodId">Upravit</a> |
-                    <a asp-action="Delete" class="pridat-tlacitko" asp-route-id="@item.FoodId">Smazat</a>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                <td class="nowrap">
+                    <a asp-action="Edit" class="add-button" asp-route-id="@item.FoodId">Upravit</a> |
+                    <a asp-action="Delete" class="add-button" asp-route-id="@item.FoodId">Smazat</a>
                 </td>
             </tr>
         }
@@ -99,9 +128,10 @@
 
     <script type="text/javascript">
 
-
         $(document).ready(function () {
-            $('#razeni').DataTable();
+            $('#razeni').DataTable(
+
+            );
         });
 
     </script>

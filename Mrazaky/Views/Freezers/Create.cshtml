@@ -4,21 +4,16 @@
     ViewData["Title"] = "Create";
 }
 
-<h4>Přidej informaci o mrazáku</h4>
+<h4>Zadejte informaci o mrazáku</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Order" class="control-label"></label>
-                <input asp-for="Order" class="form-control" />
-                <span asp-validation-for="Order" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FreezerLocation" class="control-label"></label>
-                <input asp-for="FreezerLocation" class="form-control" />
-                <span asp-validation-for="FreezerLocation" class="text-danger"></span>
+                <label asp-for="FreezerName" class="control-label"></label>
+                <input asp-for="FreezerName" class="form-control" />
+                <span asp-validation-for="FreezerName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NumberOfShelves" class="control-label"></label>
@@ -41,14 +36,14 @@
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Vytvořit" class="pridat-tlacitko" />
+                <input type="submit" value="Vytvořit" class="add-button" />
             </div>
         </form>
     </div>
 </div>
 <br />
 <div>
-    <a asp-action="Index" class="pridat-tlacitko">Zpět</a>
+    <a asp-action="Index" class="add-button">Zpět</a>
 </div>
 
 @section Scripts {

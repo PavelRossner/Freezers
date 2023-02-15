@@ -27,22 +27,24 @@
 
                         <ul class="navbar-nav mr-auto d-flex align-items-center">
 
-                            <li class="nav-item navbar-underline"><a asp-controller="Home" asp-action="Index" id="barva">Úvod</a></li>
-                            <li class="nav-item navbar-underline"><a asp-controller="Foods" asp-action="Index" id="barva">Potraviny</a></li>
-                            <li class="nav-item navbar-underline"><a asp-controller="Freezers" asp-action="Index" id="barva">Mrazáky</a></li>
-
+                            <li class="nav-item navbar-underline"><a asp-controller="Home" asp-action="Index" id="navbartextcolor">Úvod</a></li>
+                            <li class="nav-item navbar-underline"><a asp-controller="Foods" asp-action="Index" id="navbartextcolor">Potraviny</a></li>
+                            
+                            <li class="nav-item navbar-underline"><a asp-controller="Freezers" asp-action="Index" id="navbartextcolor">Mrazáky</a></li>
                             <li class="nav-item dropdown">
-                                <div class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" id="barva">
-                                    Správa uživatelů
+                                <div class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" id="navbartextcolor">
+                                    Správa uživatelů a aplikace
                                 </div>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-controller="Account" asp-action="Login" id="barva">Přihlášení</a>
-                                    <a class="dropdown-item" asp-controller="Account" asp-action="Logout" id="barva">Odhlášení</a>
-                                    <a class="dropdown-item" asp-controller="Account" asp-action="Register" id="barva">Registrovat</a>
-                                    <a class="dropdown-item" asp-controller="Account" asp-action="Index" id="barva">Uživatelé</a>
+                                    <a class="dropdown-item" asp-controller="Account" asp-action="Login" id="navbartextcolor">Přihlášení</a>
+                                    <a class="dropdown-item" asp-controller="Account" asp-action="Logout" id="navbartextcolor">Odhlášení</a>
+                                    <a class="dropdown-item" asp-controller="Account" asp-action="Register" id="navbartextcolor">Registrovat</a>
+                                    <a class="dropdown-item" asp-controller="Account" asp-action="Index" id="navbartextcolor">Uživatelé (admin)</a>
+                                    <a class="dropdown-item" asp-controller="FreezerFoods" asp-action="Index" id="navbartextcolor">Mrazáky a potraviny (admin)</a>
+                                    <a class="dropdown-item" asp-controller="FoodCategories" asp-action="Index" id="navbartextcolor">Kategorie potravin</a>
                                 </div>
                             </li>
-                            <li class="nav-item" id="barva">
+                            <li class="nav-item" id="navbartextcolor">
                                 <a href="/Account/Login">
                                     @if (User.Identity.IsAuthenticated)
                                     {
@@ -51,8 +53,6 @@
                                     }
                                 </a>
                             </li>
-
-                            <li class="nav-item px-2 navbar-underline"><a asp-controller="Home" asp-action="About" id="barva">O aplikaci</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -64,6 +64,15 @@
             @RenderBody()
         </main>
     </div>
+
+    @if (ViewData["Title"] == "Home Page")
+
+    {
+        <footer>
+            Vytvořili &copy; Pavel Rössner a Ben Ranš @DateTime.Now.Year
+            <a class="add-button" asp-controller="Home" asp-action="Contact">Kontakt</a>
+        </footer>
+    }
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
