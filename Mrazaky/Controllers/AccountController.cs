@@ -146,11 +146,6 @@ namespace Mrazaky.Controllers
                 return NotFound();
             }
 
-            //if (food != null || freezer != null)
-            //{
-            //    return RedirectToAction("Error_database", "Account");
-            //}
-
             var user = await db.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
