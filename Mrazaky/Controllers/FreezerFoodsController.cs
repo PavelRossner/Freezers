@@ -24,13 +24,14 @@ namespace Mrazaky.Controllers
         public async Task<IActionResult> Index()
         {
             var user = User.Identity.GetUserId();
+            string email = User.Identity.Name;
 
             if (user == null)
             {
                 return RedirectToAction("Error_user");
             }
 
-            else if (User.Identity.Name.Contains("admin"))
+            else if (email.Contains("admin") == true || email.Contains("pajaro") == true)
             {
                 var applicationDbContext = db.FreezerFood.Include(f => f.Food).Include(f => f.Freezer);
                 return View(await applicationDbContext.ToListAsync());
@@ -38,7 +39,7 @@ namespace Mrazaky.Controllers
 
             else
             {
-                return RedirectToAction("Error_admin");
+                return RedirectToAction("Error_user");
             }
         }
 

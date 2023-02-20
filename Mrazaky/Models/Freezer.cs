@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mrazaky.Models
@@ -37,5 +38,6 @@ namespace Mrazaky.Models
 
         //TODO - delete Navigation property => not deleted - needed in FoodsController
         public virtual ICollection<Food> Foods { get; set; } = new HashSet<Food>();
+        public virtual ApplicationUser User { get; set; }
     }
 }

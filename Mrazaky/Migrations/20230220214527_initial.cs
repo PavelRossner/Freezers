@@ -180,14 +180,14 @@ namespace Mrazaky.Migrations
                     LastDefrosted = table.Column<DateTime>(type: "date", nullable: false, comment: "LastDefrosted"),
                     DefrostInterval = table.Column<int>(type: "int", nullable: false, comment: "DefrostInterval"),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "Note"),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Freezer", x => x.FreezerId);
                     table.ForeignKey(
-                        name: "FK_Freezer_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Freezer_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
@@ -237,15 +237,15 @@ namespace Mrazaky.Migrations
                     PackageLabel = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "PackageLabel"),
                     FreezerPosition = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "FreezerPosition"),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "Note"),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     FreezerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Food", x => x.FoodId);
                     table.ForeignKey(
-                        name: "FK_Food_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Food_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -332,19 +332,14 @@ namespace Mrazaky.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Food_ApplicationUserId",
-                table: "Food",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Food_FreezerId",
                 table: "Food",
                 column: "FreezerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Freezer_ApplicationUserId",
-                table: "Freezer",
-                column: "ApplicationUserId");
+                name: "IX_Food_UserId",
+                table: "Food",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Freezer_FreezerName",
@@ -352,6 +347,11 @@ namespace Mrazaky.Migrations
                 column: "FreezerName",
                 unique: true,
                 filter: "[FreezerName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Freezer_UserId",
+                table: "Freezer",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FreezerFood_FoodID",

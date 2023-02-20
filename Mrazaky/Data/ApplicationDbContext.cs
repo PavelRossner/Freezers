@@ -16,12 +16,12 @@ namespace Mrazaky.Data
             : base(options)
         {
         }
+        public DbSet<ApplicationUser> User { get; set; }
+        public DbSet<ApplicationUserFreezer> ApplicationUserFreezer { get; set; }
         public DbSet<Food> Food { get; set; }
         public DbSet<FoodCategory> FoodCategory { get; set; }
         public DbSet<Freezer> Freezer { get; set; }
         public DbSet<FreezerFood> FreezerFood { get; set; }
-        public DbSet<ApplicationUser> User { get; set; }
-
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

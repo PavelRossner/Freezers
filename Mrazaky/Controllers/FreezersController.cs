@@ -24,14 +24,15 @@ namespace Mrazaky.Controllers
         // GET: Freezers
         public IActionResult Index()
         {
-            string user = User.Identity.GetUserId();
+            string Id = User.Identity.GetUserId();
+            ApplicationUser user = db.Users.FirstOrDefault(u => u.Id == Id);
 
             if (user == null)
             {
                 return RedirectToAction("Error", "Freezers");
             }
 
-            return View(db.Freezer.Select(FreezerResponse.GetFreezerResponse).ToList());
+            return View(db.Freezer.Where(u => u.User.Id == Id).Select(FreezerResponse.GetFreezerResponse).ToList());
         }
 
 
@@ -158,7 +159,7 @@ namespace Mrazaky.Controllers
                 return Problem("Entity set 'ApplicationDbContext.Freezer'  is null.");
             }
             Freezer freezer = await db.Freezer.FindAsync(id);
-            
+
             if (freezer != null)
 
             {

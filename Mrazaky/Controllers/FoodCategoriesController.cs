@@ -24,13 +24,22 @@ namespace Mrazaky.Controllers
         public IActionResult Index()
         {
             var user = User.Identity.GetUserId();
+            string email = User.Identity.Name;
 
             if (user == null)
             {
                 return RedirectToAction("Error_user", "Account");
             }
 
+            else if (email.Contains("admin") == true || email.Contains("pajaro") == true)
+            {
                 return View(db.FoodCategory.ToList());
+            }
+
+            else
+            {
+                return RedirectToAction("Error_user", "Account");
+            }                
         }
 
         // GET: FoodCategories/Create

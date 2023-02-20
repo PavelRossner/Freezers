@@ -23,14 +23,15 @@ namespace Mrazaky.Controllers
         // GET: Foods
         public IActionResult Index()
         {
-            string user = User.Identity.GetUserId();
+            string Id = User.Identity.GetUserId();
+            ApplicationUser user = db.Users.FirstOrDefault(u => u.Id == Id);    
 
             if (user == null)
             {
                 return RedirectToAction("Error", "Foods");
             }
 
-            return View(db.Food.Select(FoodResponse.GetFoodResponse).ToList());
+            return View(db.Food.Where(u => u.User.Id == Id).Select(FoodResponse.GetFoodResponse).ToList());
         }
 
         // GET: Foods/Create
@@ -45,7 +46,7 @@ namespace Mrazaky.Controllers
 
             else
                 ViewData["Category"] = new SelectList(db.FoodCategory, "FoodCategoryName", "FoodCategoryName");     //Creates dropdown menu in View (also see Create/POST)
-                ViewData["FreezerName"] = new SelectList(db.Freezer, "FreezerName", "FreezerName");                 //Creates dropdown menu in View (also see Create/POST)
+            ViewData["FreezerName"] = new SelectList(db.Freezer, "FreezerName", "FreezerName");                 //Creates dropdown menu in View (also see Create/POST)
             return View();
         }
 

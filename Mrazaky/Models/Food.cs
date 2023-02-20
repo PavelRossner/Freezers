@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mrazaky.Models
@@ -47,5 +48,6 @@ namespace Mrazaky.Models
         /// Gets or sets the freezer food.
         /// </summary>
         public virtual ICollection<FreezerFood> FreezerFood { get; set; } = new HashSet<FreezerFood>();
+        public virtual ApplicationUser User { get; set; }
     }
 }

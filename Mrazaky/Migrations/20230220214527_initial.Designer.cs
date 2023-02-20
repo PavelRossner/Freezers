@@ -12,7 +12,7 @@ using Mrazaky.Data;
 namespace Mrazaky.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230214221510_initial")]
+    [Migration("20230220214527_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -276,9 +276,6 @@ namespace Mrazaky.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FoodId"), 1L, 1);
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("BestBefore")
                         .HasColumnType("date")
                         .HasComment("BestBefore");
@@ -318,15 +315,18 @@ namespace Mrazaky.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasComment("PackageLabel");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Weight")
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Weight");
 
                     b.HasKey("FoodId");
 
-                    b.HasIndex("ApplicationUserId");
-
                     b.HasIndex("FreezerId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Food");
                 });
@@ -358,9 +358,6 @@ namespace Mrazaky.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FreezerId"), 1L, 1);
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("DefrostInterval")
                         .HasColumnType("int")
                         .HasComment("DefrostInterval");
@@ -381,13 +378,16 @@ namespace Mrazaky.Migrations
                         .HasColumnType("int")
                         .HasComment("NumberOfShelves");
 
-                    b.HasKey("FreezerId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasKey("FreezerId");
 
                     b.HasIndex("FreezerName")
                         .IsUnique()
                         .HasFilter("[FreezerName] IS NOT NULL");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Freezer");
                 });
@@ -495,20 +495,24 @@ namespace Mrazaky.Migrations
 
             modelBuilder.Entity("Mrazaky.Models.Food", b =>
                 {
-                    b.HasOne("Mrazaky.Models.ApplicationUser", null)
-                        .WithMany("Foods")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("Mrazaky.Models.Freezer", null)
                         .WithMany("Foods")
                         .HasForeignKey("FreezerId");
+
+                    b.HasOne("Mrazaky.Models.ApplicationUser", "User")
+                        .WithMany("Foods")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Mrazaky.Models.Freezer", b =>
                 {
-                    b.HasOne("Mrazaky.Models.ApplicationUser", null)
+                    b.HasOne("Mrazaky.Models.ApplicationUser", "User")
                         .WithMany("Freezers")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Mrazaky.Models.FreezerFood", b =>
