@@ -99,6 +99,21 @@ nav ul li {
     border-collapse: collapse;
 }
 
+/*Styling of tables - extra wide*/
+.table-wide {
+    width: 1500px;
+    text-align: center;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-collapse: collapse;
+}
+
+/*Styling of tables - row height*/
+.row-height {
+    height: 50px;
+}
+
+
 /*Footer styling*/
 footer {
     box-sizing: border-box;
@@ -174,4 +189,10 @@ thead {
 /*Sets left alignment for JS date-time at home page*/
 .JSleft {
     text-align: left;
+}
+
+/*Sets the size of Javascript charts*/
+.canvas-size {
+    width: auto;
+    height: 500px
 }

@@ -12,7 +12,7 @@ using Mrazaky.Data;
 namespace Mrazaky.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230220214527_initial")]
+    [Migration("20230302105751_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -267,6 +267,49 @@ namespace Mrazaky.Migrations
                     b.HasComment("Holds information about user's freezers");
                 });
 
+            modelBuilder.Entity("Mrazaky.Models.DashboardViewModel", b =>
+                {
+                    b.Property<int>("DashboardViewModelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasComment("DashboardViewModelId");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DashboardViewModelId"), 1L, 1);
+
+                    b.Property<int>("ExpiredFood")
+                        .HasColumnType("int")
+                        .HasComment("ExpiredFood");
+
+                    b.Property<int>("FoodCategoryCount")
+                        .HasColumnType("int")
+                        .HasComment("FoodCategoryCount");
+
+                    b.Property<int>("FoodCount")
+                        .HasColumnType("int")
+                        .HasComment("FoodCount");
+
+                    b.Property<int>("FreezerCount")
+                        .HasColumnType("int")
+                        .HasComment("FreezerCount");
+
+                    b.Property<int>("FreezerFoodCount")
+                        .HasColumnType("int")
+                        .HasComment("FreezerFoodCount");
+
+                    b.Property<int>("NonExpiredFood")
+                        .HasColumnType("int")
+                        .HasComment("NonExpiredFood");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("DashboardViewModelId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("DashboardViewModel");
+                });
+
             modelBuilder.Entity("Mrazaky.Models.Food", b =>
                 {
                     b.Property<int>("FoodId")
@@ -344,7 +387,12 @@ namespace Mrazaky.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasComment("Category");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("FoodCategoryId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("FoodCategory");
                 });
@@ -401,6 +449,10 @@ namespace Mrazaky.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FreezerFoodID"), 1L, 1);
 
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)")
+                        .HasComment("Category");
+
                     b.Property<int>("FoodID")
                         .HasColumnType("int")
                         .HasComment("FoodID");
@@ -413,11 +465,16 @@ namespace Mrazaky.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasComment("FreezerLocation");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("FreezerFoodID");
 
                     b.HasIndex("FoodID");
 
                     b.HasIndex("FreezerID");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("FreezerFood");
                 });
@@ -493,6 +550,15 @@ namespace Mrazaky.Migrations
                     b.Navigation("Freezer");
                 });
 
+            modelBuilder.Entity("Mrazaky.Models.DashboardViewModel", b =>
+                {
+                    b.HasOne("Mrazaky.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Mrazaky.Models.Food", b =>
                 {
                     b.HasOne("Mrazaky.Models.Freezer", null)
@@ -501,6 +567,15 @@ namespace Mrazaky.Migrations
 
                     b.HasOne("Mrazaky.Models.ApplicationUser", "User")
                         .WithMany("Foods")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Mrazaky.Models.FoodCategory", b =>
+                {
+                    b.HasOne("Mrazaky.Models.ApplicationUser", "User")
+                        .WithMany("FoodCategories")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
@@ -531,14 +606,24 @@ namespace Mrazaky.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_FreezerFood_Freezer");
 
+                    b.HasOne("Mrazaky.Models.ApplicationUser", "User")
+                        .WithMany("FreezerFood")
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Food");
 
                     b.Navigation("Freezer");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Mrazaky.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("FoodCategories");
+
                     b.Navigation("Foods");
+
+                    b.Navigation("FreezerFood");
 
                     b.Navigation("Freezers");
 

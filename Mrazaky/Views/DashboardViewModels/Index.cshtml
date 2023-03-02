@@ -1,0 +1,349 @@
+﻿@model Mrazaky.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Přehled mrazáků a jídel:</h2>
+
+<div class="JSleft">
+    <script type="text/javascript">
+        document.write;
+        let d = new Date(); // vytvoří proměnnou, ve které je aktuální datum
+        var dnesnidatum = "Dnes je: " + d.getDate() + ". " + (d.getMonth() + 1) + ". " + d.getFullYear();
+        document.write('<span style="color:#00386B; font-size: 24px; text-shadow: 3px 3px 7px #666666; text-align: left;">' + dnesnidatum + '</span>');
+        document.write("<br />");
+    </script>
+</div>
+
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-4 canvas-size">
+            <canvas id="Chart1"></canvas>
+        </div>
+        <div class="col-4 canvas-size">
+            <canvas id="Chart2"></canvas>
+        </div>
+        <div class="col-4 canvas-size">
+            <canvas id="Chart3"></canvas>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-4 canvas-size">
+            <canvas id="Chart4"></canvas>
+        </div>
+        <div class="col-4 canvas-size">
+            <canvas id="Chart5"></canvas>
+        </div>
+        <div class="col-4 canvas-size">
+            <canvas id="Chart6"></canvas>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var ctx1 = document.getElementById('Chart1').getContext('2d');
+    var ctx2 = document.getElementById('Chart2').getContext('2d');
+    var ctx3 = document.getElementById('Chart3').getContext('2d');
+    var ctx4 = document.getElementById('Chart4').getContext('2d');
+    var ctx5 = document.getElementById('Chart5').getContext('2d');
+    var ctx6 = document.getElementById('Chart6').getContext('2d');
+
+    var Chart1 = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            datasets: [{
+                label: 'Počet evidovaných mrazáků',
+                data: [@Model.FreezerCount,],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'Počet evidovaných mrazáků',
+                fontSize: 20
+            },
+            scales: {
+                xAxes: [{
+                    maxBarThickness: 100,
+                }],
+                yAxes: [{
+                    ticks: {
+                        stepSize: 1,
+                        min: 0,
+                        max: 5,
+                        beginAtZero: true,
+                        callback: function (value, index, values) {
+                            return value.toFixed(0); // display zero decimal places
+                        }
+                    }
+                }]
+            },
+
+            onClick: function (e, item) {
+                if (item.length) {
+                    var index = item[0]._index;
+                    var label = Chart1.data.labels[index];
+                    window.location.href = "Freezers/";
+                }
+            },
+
+            legend: {
+                display: false  // set display to false to hide the legend
+            }
+        }
+    });
+
+
+
+
+    var Chart2 = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            datasets: [{
+                label: 'Počet jídel v mrazácích',
+                data: [@Model.FoodCount,],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'Počet jídel v mrazácích',
+                fontSize: 20
+            },
+            scales: {
+                xAxes: [{
+                    maxBarThickness: 100,
+                }],
+                yAxes: [{
+                    ticks: {
+                        stepSize: 1,
+                        maxTicksLimit: 20,
+                        beginAtZero: true,
+                        callback: function (value, index, values) {
+                            return value.toFixed(0); // display zero decimal places
+                        }
+                    }
+                }]
+            },
+
+            onClick: function (e, item) {
+                if (item.length) {
+                    var index = item[0]._index;
+                    var label = Chart2.data.labels[index];
+                    window.location.href = "Foods/";
+                }
+            },
+
+
+            legend: {
+                display: false  // set display to false to hide the legend
+            }
+        }
+    });
+
+
+
+    var Chart3 = new Chart(ctx3, {
+        type: 'bar',
+        data: {
+            datasets: [{
+                label: 'Počet kategorií jídel',
+                data: [@Model.FoodCategoryCount,],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'Počet kategorií jídel',
+                fontSize: 20
+            },
+            scales: {
+                xAxes: [{
+                    maxBarThickness: 100,
+                }],
+                yAxes: [{
+                    ticks: {
+                        stepSize: 1,
+                        beginAtZero: true,
+                        callback: function (value, index, values) {
+                            return value.toFixed(0); // display zero decimal places
+                        }
+                    }
+                }]
+            },
+
+
+            onClick: function (e, item) {
+                if (item.length) {
+                    var index = item[0]._index;
+                    var label = Chart3.data.labels[index];
+                    window.location.href = "FoodCategories/";
+                }
+            },
+
+
+            legend: {
+                display: false  // set display to false to hide the legend
+            }
+        }
+    });
+
+
+
+    var Chart4 = new Chart(ctx4, {
+        type: 'bar',
+        data: {
+            //labels: ['Počty neprošlých a prošlých jídel celkem'],
+            datasets: [{
+                label: 'Neprošlá jídla',
+                data: [@Model.NonExpiredFood],
+                backgroundColor: [
+                    'rgba(255, 206, 86, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 206, 86, 1)',
+                ],
+                borderWidth: 1
+            },
+
+            {
+                label: 'Prošlá jídla',
+                data: [@Model.ExpiredFood],
+                backgroundColor: [
+                    'rgba(255, 100, 86, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 100, 86, 1)',
+                ],
+                borderWidth: 1
+            }
+
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'Stručný přehled jídel',
+                fontSize: 20
+            },
+            scales: {
+                xAxes: [{
+                    maxBarThickness: 100,
+                }],
+                yAxes: [{
+                    ticks: {
+                        stepSize: 1,
+                        min: 0,
+                        maxTicksLimit: 20,
+                        beginAtZero: true,
+                        callback: function (value, index, values) {
+                            return value.toFixed(0); // display zero decimal places
+                        }
+                    }
+                }]
+            },
+
+            onClick: function (e, item) {
+                if (item.length) {
+                    var index = item[0]._index;
+                    var label = Chart2.data.labels[index];
+                    window.location.href = "FreezerFoods/";
+                }
+            },
+
+            legend: {
+                display: true,  // set display to true to show the legend
+                position: 'top'
+            }
+        }
+    });
+
+
+    var Chart5 = new Chart(ctx5, {
+        type: 'pie',
+        data: {
+            labels: [
+                'Neprošlá jídla',
+                'Prošlá jídla'],
+            datasets: [{
+                data: [@Model.NonExpiredFood, @Model.ExpiredFood],
+
+                backgroundColor: [
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(255, 100, 86, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(255, 100, 86, 1)',
+                ],
+                borderWidth: 1
+            },
+
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            title: {
+                display: true,
+                text: 'Prošlá a neprošlá jídla',
+                fontSize: 20
+            },
+
+            onClick: function (e, item) {
+                if (item.length) {
+                    var index = item[0]._index;
+                    var label = Chart5.data.labels[index];
+                    window.location.href = "Foods";
+                }
+            },
+
+            legend: {
+                display: true  // set display to true to show the legend
+            }
+        }
+    });
+
+
+</script>
+
+
+

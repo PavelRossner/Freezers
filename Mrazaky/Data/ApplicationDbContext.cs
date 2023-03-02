@@ -32,6 +32,7 @@ namespace Mrazaky.Data
 
             modelBuilder.ApplyConfiguration(new ApplicationUserConfiguration());
             modelBuilder.ApplyConfiguration(new ApplicationUserFreezerConfiguration());
+            modelBuilder.ApplyConfiguration(new DashboardViewConfiguration());
             modelBuilder.ApplyConfiguration(new FoodConfiguration());
             modelBuilder.ApplyConfiguration(new FoodCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new FreezerConfiguration());

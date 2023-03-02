@@ -51,19 +51,6 @@ namespace Mrazaky.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FoodCategory",
-                columns: table => new
-                {
-                    FoodCategoryId = table.Column<int>(type: "int", nullable: false, comment: "FoodCategoryId")
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FoodCategoryName = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "Category")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FoodCategory", x => x.FoodCategoryId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -170,6 +157,49 @@ namespace Mrazaky.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DashboardViewModel",
+                columns: table => new
+                {
+                    DashboardViewModelId = table.Column<int>(type: "int", nullable: false, comment: "DashboardViewModelId")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FoodCount = table.Column<int>(type: "int", nullable: false, comment: "FoodCount"),
+                    FreezerCount = table.Column<int>(type: "int", nullable: false, comment: "FreezerCount"),
+                    FoodCategoryCount = table.Column<int>(type: "int", nullable: false, comment: "FoodCategoryCount"),
+                    FreezerFoodCount = table.Column<int>(type: "int", nullable: false, comment: "FreezerFoodCount"),
+                    ExpiredFood = table.Column<int>(type: "int", nullable: false, comment: "ExpiredFood"),
+                    NonExpiredFood = table.Column<int>(type: "int", nullable: false, comment: "NonExpiredFood"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DashboardViewModel", x => x.DashboardViewModelId);
+                    table.ForeignKey(
+                        name: "FK_DashboardViewModel_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FoodCategory",
+                columns: table => new
+                {
+                    FoodCategoryId = table.Column<int>(type: "int", nullable: false, comment: "FoodCategoryId")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FoodCategoryName = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "Category"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FoodCategory", x => x.FoodCategoryId);
+                    table.ForeignKey(
+                        name: "FK_FoodCategory_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Freezer",
                 columns: table => new
                 {
@@ -263,11 +293,18 @@ namespace Mrazaky.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FoodID = table.Column<int>(type: "int", nullable: false, comment: "FoodID"),
                     FreezerID = table.Column<int>(type: "int", nullable: false, comment: "FreezerID"),
-                    FreezerName = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "FreezerLocation")
+                    FreezerName = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "FreezerLocation"),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "Category"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FreezerFood", x => x.FreezerFoodID);
+                    table.ForeignKey(
+                        name: "FK_FreezerFood_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_FreezerFood_Food",
                         column: x => x.FoodID,
@@ -332,6 +369,11 @@ namespace Mrazaky.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DashboardViewModel_UserId",
+                table: "DashboardViewModel",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Food_FreezerId",
                 table: "Food",
                 column: "FreezerId");
@@ -339,6 +381,11 @@ namespace Mrazaky.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Food_UserId",
                 table: "Food",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FoodCategory_UserId",
+                table: "FoodCategory",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -362,6 +409,11 @@ namespace Mrazaky.Migrations
                 name: "IX_FreezerFood_FreezerID",
                 table: "FreezerFood",
                 column: "FreezerID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FreezerFood_UserId",
+                table: "FreezerFood",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -383,6 +435,9 @@ namespace Mrazaky.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "DashboardViewModel");
 
             migrationBuilder.DropTable(
                 name: "FoodCategory");

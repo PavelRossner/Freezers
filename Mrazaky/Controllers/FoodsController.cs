@@ -34,6 +34,8 @@ namespace Mrazaky.Controllers
             return View(db.Food.Where(u => u.User.Id == Id).Select(FoodResponse.GetFoodResponse).ToList());
         }
 
+
+
         // GET: Foods/Create
         public IActionResult Create()
         {
@@ -46,7 +48,7 @@ namespace Mrazaky.Controllers
 
             else
                 ViewData["Category"] = new SelectList(db.FoodCategory, "FoodCategoryName", "FoodCategoryName");     //Creates dropdown menu in View (also see Create/POST)
-            ViewData["FreezerName"] = new SelectList(db.Freezer, "FreezerName", "FreezerName");                 //Creates dropdown menu in View (also see Create/POST)
+                ViewData["FreezerName"] = new SelectList(db.Freezer, "FreezerName", "FreezerName");                 //Creates dropdown menu in View (also see Create/POST)
             return View();
         }
 
@@ -79,10 +81,11 @@ namespace Mrazaky.Controllers
 
                 else
 
-                    freezer.Foods.Add(food);
+                freezer.Foods.Add(food);
 
                 freezer.FreezerFood.Add(freezerFood);                                                       //creates FreezerID in database table FreezerFood, primary key FreezerFoodID
                 food.FreezerFood.Add(freezerFood);                                                          //creates FoodID in database table FreezerFood, primary key FreezerFoodID
+                user.FreezerFood.Add(freezerFood);                                                          //creates UserID in database table FreezerFood, primary key FreezerFoodID
 
                 db.SaveChanges();
 

@@ -14,6 +14,7 @@ namespace Mrazaky.Config
             builder.Property(p => p.FoodID).HasComment("FoodID");
             builder.Property(p => p.FreezerID).HasComment("FreezerID");
             builder.Property(p => p.FreezerName).HasComment("FreezerLocation");
+            builder.Property(p => p.Category).HasComment("Category");
 
             builder.HasOne(d => d.Freezer)
                 .WithMany(od => od.FreezerFood)

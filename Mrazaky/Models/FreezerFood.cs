@@ -28,6 +28,8 @@ namespace Mrazaky.Models
         /// </summary>
         public string FreezerName { get; set; }
 
+        public string Category { get; set; }
+
         /// <summary>
         /// Gets or sets the food.
         /// </summary>
@@ -37,5 +39,6 @@ namespace Mrazaky.Models
         /// Gets or sets the freezer.
         /// </summary>
         public virtual Freezer Freezer { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Mrazaky.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction("Index", "DashboardViewModels");
             }
         }
 
@@ -89,15 +89,15 @@ namespace Mrazaky.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string navratovaURL = null)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnURL = null)
         {
-            ViewData["ReturnUrl"] = navratovaURL;
+            ViewData["ReturnUrl"] = returnURL;
             if (ModelState.IsValid)
             {
-                var vysledekOvereni = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-                if (vysledekOvereni.Succeeded)
+                var verificationResult = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                if (verificationResult.Succeeded)
                 {
-                    return RedirectToLocal(navratovaURL);
+                    return RedirectToLocal(returnURL);
                 }
                 else
                 {
@@ -106,7 +106,7 @@ namespace Mrazaky.Controllers
                 }
             }
 
-            // Pokud byly odeslány neplatné údaje, vrátíme uživatele k přihlašovacímu formuláři
+            // If provided information is invalid, users are redirected to the login form
             return View(model);
         }
 

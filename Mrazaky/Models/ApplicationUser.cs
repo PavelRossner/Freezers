@@ -21,6 +21,8 @@ namespace Mrazaky.Models
 
         // TODO - delete => not deleted - it was needed for the application to work properly
         public virtual ICollection<Freezer> Freezers { get; set; } = new HashSet<Freezer>();
+        public virtual ICollection<FreezerFood> FreezerFood { get; set; } = new HashSet<FreezerFood>();
+        public virtual ICollection<FoodCategory> FoodCategories { get; set; } = new HashSet<FoodCategory>();
 
     }
 }

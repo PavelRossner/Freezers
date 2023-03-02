@@ -13,9 +13,9 @@
     <a class="add-button" asp-action="Create">Přidat mrazák</a> |
     <a class="add-button" asp-controller="Foods" asp-action="Index">Přidat potravinu</a>
 </p>
-<table class="table">
+<table class="table-wide">
     <thead>
-        <tr>
+        <tr class="row-height">
             <th>
                 @Html.DisplayNameFor(model => model.FreezerName)
             </th>
@@ -44,7 +44,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr class="row-height">
                 <td>
                     @Html.DisplayFor(modelItem => item.FreezerName)
                 </td>
@@ -78,7 +78,23 @@
                     @Html.DisplayFor(modelItem => item.Note)
                 </td>
                 <td>
-                    @if (User.Identity.Name == "pajaro@volny.cz" || User.Identity.Name == "andrearo@seznam.cz")
+                    @if (User.Identity.Name == "pajaro@volny.cz")
+                    {
+                        @if (item.FreezerName == "Sklep 748")
+                        {
+                            <a asp-controller="Foods" asp-action="IndexSklep748" class="add-button" asp-route-id="@item.FreezerId">Potraviny v mrazáku</a>
+                        }
+                        else if (item.FreezerName == "Kuchyně 748")
+                        {
+                            <a asp-controller="Foods" asp-action="IndexKuchyne748" class="add-button" asp-route-id="@item.FreezerId">Potraviny v mrazáku</a>
+                        }
+                        else if (item.FreezerName == "Kuchyně 833")
+                        {
+                            <a asp-controller="Foods" asp-action="IndexKuchyne833" class="add-button" asp-route-id="@item.FreezerId">Potraviny v mrazáku</a>
+                        }
+                    }
+                   
+                    @if (User.Identity.Name == "pajaro@volny.cz")
                     {
                         @if (item.FreezerName == "Sklep 748")
                         {
@@ -93,9 +109,9 @@
                             <a class="add-button" href="~/images/Kuchyne833_edit.jpg" target="_blank">Pohled na mrazák</a>
                         }
                     }
-                    |
-                    <a asp-action="Edit" class="add-button" asp-route-id="@item.FreezerId">Upravit</a> |
-                    <a asp-action="Delete" class="add-button" asp-route-id="@item.FreezerId">Smazat</a> 
+                   
+                    <a asp-action="Edit" class="add-button" asp-route-id="@item.FreezerId">Upravit</a>
+                    <a asp-action="Delete" class="add-button" asp-route-id="@item.FreezerId">Smazat</a>
                 </td>
             </tr>
         }

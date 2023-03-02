@@ -8,5 +8,6 @@ namespace Mrazaky.Models
 
         [Display(Name = "Kategorie potraviny")]
         public string FoodCategoryName { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }

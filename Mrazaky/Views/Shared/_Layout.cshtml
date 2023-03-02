@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Mrazaky.styles.css" asp-append-version="true" />
-
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="~/js/freezerfood.js"></script>
 
        
 </head>
@@ -26,10 +27,9 @@
                     <div class="collapse navbar-collapse text-nowrap" id="navbarSupportedContent">
 
                         <ul class="navbar-nav mr-auto d-flex align-items-center">
-
-                            <li class="nav-item navbar-underline"><a asp-controller="Home" asp-action="Index" id="navbartextcolor">Úvod</a></li>
+                            <li class="nav-item navbar-underline"><a asp-controller="Home" asp-action="Index" id="navbartextcolor">O aplikaci</a></li>
+                            <li class="nav-item navbar-underline"><a asp-controller="DashboardViewModels" asp-action="Index" id="navbartextcolor">Přehled</a></li>
                             <li class="nav-item navbar-underline"><a asp-controller="Foods" asp-action="Index" id="navbartextcolor">Potraviny</a></li>
-                            
                             <li class="nav-item navbar-underline"><a asp-controller="Freezers" asp-action="Index" id="navbartextcolor">Mrazáky</a></li>
                             <li class="nav-item dropdown">
                                 <div class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" id="navbartextcolor">

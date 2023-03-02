@@ -23,23 +23,15 @@ namespace Mrazaky.Controllers
         // GET: FoodCategories
         public IActionResult Index()
         {
-            var user = User.Identity.GetUserId();
-            string email = User.Identity.Name;
+            string Id = User.Identity.GetUserId();
+            ApplicationUser user = db.Users.FirstOrDefault(u => u.Id == Id);
 
             if (user == null)
             {
                 return RedirectToAction("Error_user", "Account");
             }
 
-            else if (email.Contains("admin") == true || email.Contains("pajaro") == true)
-            {
-                return View(db.FoodCategory.ToList());
-            }
-
-            else
-            {
-                return RedirectToAction("Error_user", "Account");
-            }                
+            return View(db.FoodCategory.Where(u => u.User.Id == Id).ToList());
         }
 
         // GET: FoodCategories/Create
@@ -53,12 +45,13 @@ namespace Mrazaky.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FoodCategoryId,FoodCategoryName")] FoodCategory foodCategory)
+        public IActionResult Create([Bind("FoodCategoryId,FoodCategoryName")] FoodCategory foodCategory)
         {
             if (ModelState.IsValid)
             {
-                db.Add(foodCategory);
-                await db.SaveChangesAsync();
+                var user = db.User.FirstOrDefault(u => u.Id == this.User.Identity.GetUserId());
+                user.FoodCategories.Add(foodCategory);
+                db.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View(foodCategory);
